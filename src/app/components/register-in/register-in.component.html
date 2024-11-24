@@ -1,0 +1,103 @@
+@if(userBool){
+
+
+<img src="assets/login.png" class="absolute z-20 w-64 top-[-60px] right-[-60px] h-64" alt="">
+
+
+
+<div class="bg-[#F6F6FF]  relative text-black pt-10 pb-32 h-screen w-screen">
+    <div class="px-6 ">
+        <button (click)="userBool = false" class="mb-28  text-lg  flex items-center gap-3 ">
+
+            <svg class="w-5 h-5 " fill="#000000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path
+                        d="M1.293,12.707a1,1,0,0,1-.216-.325.986.986,0,0,1,0-.764,1,1,0,0,1,.216-.325l8-8a1,1,0,1,1,1.414,1.414L4.414,11H22a1,1,0,0,1,0,2H4.414l6.293,6.293a1,1,0,0,1-1.414,1.414Z">
+                    </path>
+                </g>
+            </svg>
+
+            <p>Sign Up</p>
+
+
+        </button>
+
+        <div clas s=" flex flex-col   ">
+            <p class="text-3xl mb-5">Log in </p>
+
+            <form action="" class="flex flex-col gap-3 ">
+                <input class="bg-white py-2 px-3 rounded-lg " type="email" name="" id="" placeholder="email">
+                <input class="bg-white py-2 px-3 rounded-lg " type="password" name="" id="" placeholder="password">
+                <button class="text-start underline text-[#13B423]">Forget Password? </button>
+            </form>
+
+
+        </div>
+
+    </div>
+
+    <div class="flex justify-end items-center mt-5 ">
+        <button class="z-20 bg-[#13B423] text-white p-5 px-8 rounded-l-lg shadow-lg text-2xl  ">Let's
+            cook!
+
+        </button>
+    </div>
+
+    <div class="relative mt-52">
+        <img src="assets/ing.png" class=" left-[-50px]  absolute bottom-[-120px] z-10">
+
+    </div>
+
+</div>
+
+
+
+}@else {
+
+
+
+
+
+
+<div class="px-6 bg-[#F6F6FF] relative pt-64 h-screen">
+
+
+
+    <div clas s=" flex flex-col  ">
+        <p class="text-3xl top-10 z-40 absolute text-white ">Sign Up </p>
+        <img src="assets/-morocco.jpg " alt="" class=" absolute right-0 top-0 w-full h-56">
+        <div
+            class="w-full h-56 top-0 right-0 absolute opacity-85 z-20 bg-gradient-to-t from-transparent to-neutral-900 ">
+        </div>
+
+
+
+        <div class=" ">
+            <p class="text-lg top-10  ">Create Account </p>
+            <p class="text-sm text-gray-400 top-10  ">Create your account and start exploring </p>
+
+        </div>
+
+
+        <form action="" class="mt-10 flex flex-col gap-5 ">
+            <input class="bg-transparent " type="text" name="ddd" placeholder="Full name">
+            <input class="bg-transparent " type="email" name="ddd" placeholder="email">
+            <input class="bg-transparent " type="password" name="sss" placeholder="password">
+
+            <a class="text-start underline" (click)="userBool = true">Already Having Acount Sign in ? </a>
+            <button class="mt-10 bg-[#13B423] text-white p-2 rounded-full shadow-lg    ">Create
+                Account
+
+            </button>
+        </form>
+
+
+    </div>
+
+</div>
+
+
+
+}

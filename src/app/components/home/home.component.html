@@ -1,0 +1,96 @@
+<div id_user="core" class="flex flex-col gap-10 pt-24 pb-32 bg-[#F6F6FF]  w-screen ">
+
+    <div>
+        <!-- Add User Form -->
+        <form (ngSubmit)="addCategory()">
+            <input [(ngModel)]="newCategory.name" name="name" placeholder="name">
+            <input [(ngModel)]="newCategory.description" name="description" placeholder="description">
+            <button type="submit">Add User</button>
+        </form>
+
+        <!-- Users List -->
+        <div *ngFor="let categorie of categories">
+            <span>{{categorie.name}} - {{categorie.description}}</span>
+            <button (click)="deleteCategory(categorie.id_categorie!)">Delete</button>
+        </div>
+    </div>
+
+
+    <div class="">
+
+        <div id_user="categories">
+            <div class="px-6 flex justify-between ">
+                <p>Categories</p>
+                <a [routerLink]="['/Landing/Categories']" class="underline">See All</a>
+            </div>
+        </div>
+
+        <div class="flex py-2 gap-4 px-4 pt-5 w-full overflow-x-scroll  ">
+            <app-categorie-card *ngFor="let categorie of categories" [categorie]="categorie"></app-categorie-card>
+            <app-categorie-card></app-categorie-card>
+            <app-categorie-card></app-categorie-card>
+            <app-categorie-card></app-categorie-card>
+        </div>
+    </div>
+
+    <div>
+
+        <div id_user="thisweek">
+            <div class="px-6 flex justify-between pt-4">
+                <p class="text-xl">For You</p>
+
+            </div>
+
+            <div class="flex gap-4 px-4 pt-5 w-full py-2 overflow-x-scroll  ">
+                <div [routerLink]="['/Landing/Recip']"><app-recips-card> </app-recips-card></div>
+                <div [routerLink]="['/Landing/Recip']"><app-recips-card> </app-recips-card></div>
+                <div [routerLink]="['/Landing/Recip']"><app-recips-card> </app-recips-card></div>
+                <div [routerLink]="['/Landing/Recip']"><app-recips-card> </app-recips-card></div>
+                <div [routerLink]="['/Landing/Recip']"><app-recips-card> </app-recips-card></div>
+                <div [routerLink]="['/Landing/Recip']"><app-recips-card> </app-recips-card></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div>
+
+        <div id_user="thisweek">
+            <div class="px-6 flex justify-between pt-4">
+                <p class="text-xl">Tagines </p>
+
+            </div>
+
+            <div class="flex gap-4 px-4 py-2 pt-5 w-full overflow-x-scroll  ">
+                <app-recips-card></app-recips-card>
+                <app-recips-card></app-recips-card>
+                <app-recips-card></app-recips-card>
+                <app-recips-card></app-recips-card>
+            </div>
+        </div>
+    </div>
+
+    <div>
+
+        <div id_user="thisweek">
+            <div class="px-6 flex justify-between pt-4 ">
+                <p class="text-xl ">Couscous </p>
+
+            </div>
+
+            <div class="flex gap-4 px-4 pt-5 py-2 w-full overflow-x-scroll  ">
+                <app-recips-card></app-recips-card>
+                <app-recips-card></app-recips-card>
+                <app-recips-card></app-recips-card>
+                <app-recips-card></app-recips-card>
+            </div>
+        </div>
+    </div>
+
+    <div class=" px-4 py-4 shadow-md mx-5 flex flex-col gap-2 rounded-lg bg-white ">
+        <p class="text-xl">Looking for more?</p>
+        <p>Discover more using the search bar </p>
+        <button [routerLink]="['/Search']" class="border-2 rounded-full border-black px-20 py-1 ">Explore</button>
+    </div>
+
+</div>
