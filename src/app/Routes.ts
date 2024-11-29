@@ -7,6 +7,7 @@ import { RegisterInComponent } from './components/register-in/register-in.compon
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { RecipsOverviewComponent } from './components/recips-overview/recips-overview.component';
 import { CategoriesComponent } from './components/categories/categories.component';
+import { OnecategorieoverviewComponent } from './components/onecategorieoverview/onecategorieoverview.component';
 
 
 const routes: Routes = [
@@ -37,24 +38,19 @@ const routes: Routes = [
         component: SearchComponent
       },
       {
-        path: 'Recip',
+        path: 'Recip/:recipeId',
         component: RecipsOverviewComponent
       },
+
       {
         path: 'Categories',
         component: CategoriesComponent
-        , children: [
-          {
-            path: 'Categorie1',
-            component: RegisterInComponent
 
-          },
-          {
-            path: 'Categorie2',
-            component: SearchComponent
+      },
 
-          },
-        ]
+      {
+        path: 'overview/:CategorieId',
+        component: OnecategorieoverviewComponent
       },
 
     ]

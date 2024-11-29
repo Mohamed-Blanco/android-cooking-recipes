@@ -1,5 +1,5 @@
 export interface User {
-    id_user?: number;
+    id_user: string;
     fullname: string;
     email: string;
     password: string;
@@ -8,7 +8,7 @@ export interface User {
 }
 
 export interface Recipe {
-    id_recipe?: number;
+    id_recipe: string;
     title: string;
     image_url?: string;
     weight?: number;
@@ -19,10 +19,14 @@ export interface Recipe {
     cuisine?: string;
     id_categorie: number;
     created_at?: string;
+    leveldefficultie: string;
+    description: string;
+    burningtime: number;
+    repostime: number;
 }
 
 export interface Stage {
-    id_stage?: number;
+    id_stage?: string;
     id_recipe: number;
     description: string;
     order_num: number;
@@ -30,24 +34,25 @@ export interface Stage {
 }
 
 export interface Material {
-    id_material?: number;
+    id_material?: string;
     title_material: string;
     created_at?: string;
+    id_recipe: string;
+
+
 }
 
-export interface RecipeMaterial {
-    id_recipe: number;
-    id_material: number;
-    quantity?: number;
-    created_at?: string;
-}
+
 
 export interface Ingredient {
-    id_ingredient?: number;
+
+    id_ingredient?: string;
     id_categorie: number;
     name_ingredient: string;
     weight?: number;
     created_at?: string;
+    id_recipe: string;
+
 }
 
 export interface RecipeIngredient {
@@ -59,21 +64,23 @@ export interface RecipeIngredient {
 }
 
 export interface Category {
-    id_categorie?: number;
+    id_categorie: string;
     name: string;
     description?: string;
     created_at?: string;
+    imageurl?: string;
 }
 
 export interface Favorite {
-    id_recipe: number;
-    id_user: number;
+
+    id_recipe: string;
+    id_user: string;
     created_at?: string;
 }
 
 export interface SearchQuery {
-    id_search?: number;
-    user_id: number;
+    id_search?: string;
+    user_id: string;
     searchQuery: string;
     created_at?: string;
 }

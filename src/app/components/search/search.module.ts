@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchComponent } from '../search/search.component';
 import { CategorieCardModule } from '../categorie-card/categorie-card.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { LoadingModule } from '../loading/loading.module';
 
 
 
@@ -11,7 +14,7 @@ import { CategorieCardModule } from '../categorie-card/categorie-card.module';
   ],
   imports: [
     CommonModule,
-    CategorieCardModule
+    CategorieCardModule, FormsModule, ReactiveFormsModule, RouterModule, LoadingModule
   ], exports: [
     SearchComponent
   ]

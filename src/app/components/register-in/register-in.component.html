@@ -1,13 +1,27 @@
+@if(isLoading){
+
+
+<div class="h-screen bg-[#F6F6FF]  pb-10 flex w-screen justify-center items-center">
+    <app-loading></app-loading>
+</div>
+
+}@else {
+
+
+
+<img [routerLink]="['/Landing/Home']" src="assets/icons/cross.png" class="absolute right-10 top-14 z-50 w-3 h-3" alt="">
+
 @if(userBool){
 
 
 <img src="assets/login.png" class="absolute z-20 w-64 top-[-60px] right-[-60px] h-64" alt="">
+<img src="assets/login.png" class="absolute z-20 w-64 top-[-60px] right-[-60px] h-64" alt="">
 
 
 
-<div class="bg-[#F6F6FF]  relative text-black pt-10 pb-32 h-screen w-screen">
+<div class="bg-[#F6F6FF]  overflow-hidden relative text-black pt-10 pb-32 h-full max-h-screen maw-w-screen">
     <div class="px-6 ">
-        <button (click)="userBool = false" class="mb-28  text-lg  flex items-center gap-3 ">
+        <button (click)="ToggleLogin()" class="mb-28  text-lg  flex items-center gap-3 ">
 
             <svg class="w-5 h-5 " fill="#000000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -19,7 +33,7 @@
                 </g>
             </svg>
 
-            <p>Sign Up</p>
+            <p>Sign Up </p>
 
 
         </button>
@@ -27,10 +41,40 @@
         <div clas s=" flex flex-col   ">
             <p class="text-3xl mb-5">Log in </p>
 
-            <form action="" class="flex flex-col gap-3 ">
-                <input class="bg-white py-2 px-3 rounded-lg " type="email" name="" id="" placeholder="email">
-                <input class="bg-white py-2 px-3 rounded-lg " type="password" name="" id="" placeholder="password">
-                <button class="text-start underline text-[#13B423]">Forget Password? </button>
+            <form (ngSubmit)="loginFunction(loginForm)" #loginForm="ngForm" class="flex flex-col gap-3">
+                <input class="bg-white py-2 px-3 rounded-lg" type="email" name="email" ngModel #email="ngModel" required
+                    email placeholder="Email" [class.border-red-500]="email.invalid && (email.dirty || email.touched)">
+                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-red-500 text-sm">
+                    <small *ngIf="email.errors?.['required']">Email is required.</small>
+                    <small *ngIf="email.errors?.['email']">Please enter a valid email address.</small>
+                </div>
+
+                <input class="bg-white py-2 px-3 rounded-lg" type="password" name="password" ngModel #password="ngModel"
+                    required minlength="6" placeholder="Password"
+                    [class.border-red-500]="password.invalid && (password.dirty || password.touched)">
+                <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-red-500 text-sm">
+                    <small *ngIf="password.errors?.['required']">Password is required.</small>
+                    <small *ngIf="password.errors?.['minlength']">Password must be at least 6 characters long.</small>
+                </div>
+
+                <button type="button" class="text-start underline text-[#13B423] self-start">
+                    Forget Password?
+                </button>
+
+
+
+                <!-- Error message display -->
+                <div *ngIf="errorMessage" class="text-red-500 text-sm">
+                    {{ errorMessage }}
+                </div>
+
+                <div class="flex justify-end items-center relative mt-5 ">
+                    <button type="submit" [disabled]="loginForm.invalid"
+                        class="absolute top-0 right-[-1.5rem] z-20 bg-[#13B423] text-white p-5 px-8 rounded-l-lg shadow-lg text-2xl  ">Let's
+                        cook!
+
+                    </button>
+                </div>
             </form>
 
 
@@ -38,15 +82,10 @@
 
     </div>
 
-    <div class="flex justify-end items-center mt-5 ">
-        <button class="z-20 bg-[#13B423] text-white p-5 px-8 rounded-l-lg shadow-lg text-2xl  ">Let's
-            cook!
 
-        </button>
-    </div>
 
     <div class="relative mt-52">
-        <img src="assets/ing.png" class=" left-[-50px]  absolute bottom-[-120px] z-10">
+        <img src="assets/ing.png" class=" left-[-50px]  absolute bottom-[-180px] z-10">
 
     </div>
 
@@ -61,12 +100,18 @@
 
 
 
-<div class="px-6 bg-[#F6F6FF] relative pt-64 h-screen">
+<div class="px-6 overflow-hidden bg-[#F6F6FF] relative pt-64 h-screen">
 
 
 
     <div clas s=" flex flex-col  ">
+
         <p class="text-3xl top-10 z-40 absolute text-white ">Sign Up </p>
+
+
+
+
+
         <img src="assets/-morocco.jpg " alt="" class=" absolute right-0 top-0 w-full h-56">
         <div
             class="w-full h-56 top-0 right-0 absolute opacity-85 z-20 bg-gradient-to-t from-transparent to-neutral-900 ">
@@ -81,15 +126,34 @@
         </div>
 
 
-        <form action="" class="mt-10 flex flex-col gap-5 ">
-            <input class="bg-transparent " type="text" name="ddd" placeholder="Full name">
-            <input class="bg-transparent " type="email" name="ddd" placeholder="email">
-            <input class="bg-transparent " type="password" name="sss" placeholder="password">
+        <form #register="ngForm" (ngSubmit)="registerFunction(register)" class="mt-10 flex flex-col gap-5">
+            <input class="bg-transparent" ngModel type="text" name="fullname" placeholder="Full name" required
+                #fullname="ngModel">
+            <div *ngIf="fullname.invalid && (fullname.dirty || fullname.touched)" class="text-red-500">
+                Full name is required
+            </div>
 
-            <a class="text-start underline" (click)="userBool = true">Already Having Acount Sign in ? </a>
-            <button class="mt-10 bg-[#13B423] text-white p-2 rounded-full shadow-lg    ">Create
-                Account
+            <input class="bg-transparent" ngModel type="email" name="email" placeholder="email" required email
+                #email="ngModel">
+            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-red-500">
+                <span *ngIf="email.errors?.['required']">Email is required</span>
+                <span *ngIf="email.errors?.['email']">Invalid email format</span>
+            </div>
 
+            <input class="bg-transparent" ngModel type="password" name="password" placeholder="password" required
+                minlength="6" #password="ngModel">
+            <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-red-500">
+                <span *ngIf="password.errors?.['required']">Password is required</span>
+                <span *ngIf="password.errors?.['minlength']">Password must be at least 6 characters</span>
+            </div>
+
+            <a class="text-start underline" (click)="ToggleLogin()">
+                Already Having Account? Sign in
+            </a>
+
+            <button type="submit" [disabled]="!register.form.valid"
+                class="mt-10 bg-[#13B423] text-white p-2 rounded-full shadow-lg">
+                Create Account
             </button>
         </form>
 
@@ -100,4 +164,5 @@
 
 
 
+}
 }

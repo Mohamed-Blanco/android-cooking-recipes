@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RecipsOverviewComponent } from './recips-overview.component';
 import { CostumhrModule } from '../costumhr/costumhr.module';
+import { LoadingModule } from '../loading/loading.module';
 
 
 
@@ -9,7 +10,8 @@ import { CostumhrModule } from '../costumhr/costumhr.module';
   declarations: [RecipsOverviewComponent],
   imports: [
     CommonModule,
-    CostumhrModule
+    CostumhrModule,
+    LoadingModule
   ],
   exports: [
     RecipsOverviewComponent

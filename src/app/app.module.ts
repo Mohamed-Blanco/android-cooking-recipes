@@ -17,10 +17,26 @@ import { CostumhrModule } from './components/costumhr/costumhr.module';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CategoriesModule } from './components/categories/categories.module';
 import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
+import { environment } from '../envirements/envirement';
+
+
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideDatabase, getDatabase } from '@angular/fire/database';
+import { importProvidersFrom } from '@angular/core';
+import { SettingsModule } from './components/settings/settings.module';
+import { provideAuth } from '@angular/fire/auth';
+import { getAuth } from 'firebase/auth';
+import { FormsModule } from '@angular/forms';
+import { RegisterInModule } from './components/register-in/register-in.module';
+import { LoadingComponent } from './components/loading/loading.component';
+import { LoadingModule } from './components/loading/loading.module';
+import { OnecategorieoverviewComponent } from './components/onecategorieoverview/onecategorieoverview.component';
+import { OnecategorieoverviewModule } from './components/onecategorieoverview/onecategorieoverview.module';
+import { GlobalsVariables } from '../envirements/globals';
 
 
 @NgModule({
-  declarations: [AppComponent]
+  declarations: [AppComponent,]
   , imports: [
     BrowserModule,
     AppRoutingModule,
@@ -39,11 +55,20 @@ import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
     CategorieCardModule,
     MatTabsModule,
     CategoriesModule,
-
-
+    SettingsModule,
+    FormsModule,
+    RegisterInModule,
+    LoadingModule
+    , OnecategorieoverviewModule
+  ],
+  providers: [
+    GlobalsVariables,
+    SQLite,
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth()),
+    provideDatabase(() => getDatabase())
 
   ],
-  providers: [SQLite],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

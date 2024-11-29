@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FavoriteComponent } from './favorite.component';
 import { RouterModule } from '@angular/router';
+import { LoadingModule } from '../loading/loading.module';
 
 
 
@@ -9,7 +10,8 @@ import { RouterModule } from '@angular/router';
   declarations: [FavoriteComponent],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    LoadingModule
   ],
   exports: [FavoriteComponent]
 })

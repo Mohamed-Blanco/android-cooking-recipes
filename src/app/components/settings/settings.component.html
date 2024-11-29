@@ -1,6 +1,7 @@
-<div class="bg-[#F6F6FF] flex flex-col gap-4 w-screen h-full px-6 pt-16 pb-32">
+<div class="bg-[#F6F6FF] flex flex-col gap-4 w-screen h-full px-6  pb-32">
+    @if (authenticated) {
+    <p class="mt-16">Profile </p>
 
-    <p>Profile </p>
     <div class="flex px-6 py-6 rounded-lg gap-10 bg-white  shadow-md hover:text-[#13B423]  w-full ">
 
 
@@ -107,4 +108,22 @@
             <p class="text-lg">Edit profile</p>
         </div>
     </div>
+
+    }@else {
+
+    <div class="relative bg-[#F6F6FF] #2ACF82 px-6 h-screen flex justify-center items-center flex-col ">
+
+        <h1 class="absolute text-xl top-28 ">Profile</h1>
+        <h1>You don't have any any account yet </h1>
+        <p class="text-center px-5  rounded-full font-bold text-[#202025] ">Start expoloring and save your Recipes
+            and experiences here.</p>
+
+
+        <button [routerLink]="['/Register']"
+            class="border-[#13B423] border-2 shadow-sm px-6  rounded-full mt-6 text-[#13B423] ">Create Account now
+        </button>
+
+    </div> }
+
+
 </div>

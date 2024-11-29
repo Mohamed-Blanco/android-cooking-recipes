@@ -7,6 +7,8 @@ import { RouterModule } from '@angular/router';
 import { CategorieCardModule } from "../categorie-card/categorie-card.module";
 import { recipesCardModule } from "../event-card/recips-card.module";
 import { FormsModule } from '@angular/forms';
+import { LoadingModule } from '../loading/loading.module';
+
 
 
 
@@ -21,7 +23,8 @@ import { FormsModule } from '@angular/forms';
     RouterModule,
     CategorieCardModule,
     recipesCardModule,
-    FormsModule
+    FormsModule,
+    LoadingModule
   ],
   exports: [
     HomeComponent

@@ -1,50 +1,64 @@
-import { Injectable } from "@angular/core";
-import { DatabaseService } from "./database.service";
-import { Recipe, RecipeWithDetails } from "../models/models";
+import { Injectable } from '@angular/core';
+import { Recipe } from '../models/models';
+import { Database, ref, get, query, orderByChild, equalTo, limitToFirst, remove, set, update } from '@angular/fire/database';
 
 @Injectable({
     providedIn: 'root'
 })
 export class RecipeService {
-    private storeName = 'recipes';
+    private collection = 'recipes';
 
-    constructor(private dbService: DatabaseService) { }
+    constructor(private db: Database) { }
 
-    async addRecipe(recipe: Omit<Recipe, 'id_recipe' | 'created_at'>): Promise<Recipe> {
-        return this.dbService.add<Recipe>(this.storeName, recipe);
+    async addRecipe(recipe: Omit<Recipe, 'created_at'>): Promise<void> {
+        const recipeRef = ref(this.db, `${this.collection}/${recipe.id_recipe}`);
+        await set(recipeRef, recipe);
     }
 
     async getRecipes(): Promise<Recipe[]> {
-        return this.dbService.getAll<Recipe>(this.storeName);
+        const snapshot = await get(ref(this.db, this.collection));
+        return snapshot.exists() ? Object.values(snapshot.val()) as Recipe[] : [];
     }
 
-    async getRecipe(id: number): Promise<Recipe | undefined> {
-        return this.dbService.getById<Recipe>(this.storeName, id);
+    async getRecipesLimited(limit: number): Promise<Recipe[]> {
+        const recipesRef = ref(this.db, this.collection);
+        const recipesQuery = query(recipesRef, limitToFirst(limit));
+
+        const snapshot = await get(recipesQuery);
+
+        if (snapshot.exists()) {
+            const recipesData = snapshot.val();
+            return Object.keys(recipesData).map(key => ({
+                ...recipesData[key],
+                id: key
+            }));
+        }
+
+        return [];
     }
 
-    async updateRecipe(id: number, data: Partial<Recipe>): Promise<Recipe> {
-        return this.dbService.update<Recipe>(this.storeName, id, data);
+    async getRecipeById(id: string): Promise<Recipe | null> {
+        const snapshot = await get(ref(this.db, `${this.collection}/${id}`));
+        return snapshot.exists() ? snapshot.val() as Recipe : null;
     }
 
-    async deleteRecipe(id: number): Promise<void> {
-        return this.dbService.delete(this.storeName, id);
+    async getRecipesByCategoryId(categoryId: string, limit: number = 10): Promise<Recipe[]> {
+        const recipesQuery = query(
+            ref(this.db, this.collection),
+            orderByChild('id_categorie'),
+            equalTo(categoryId),
+            limitToFirst(limit)
+        );
+        const snapshot = await get(recipesQuery);
+        return snapshot.exists() ? Object.values(snapshot.val()) as Recipe[] : [];
     }
 
-    async getRecipeWithDetails(id: number): Promise<RecipeWithDetails | undefined> {
-        const sql = `
-            SELECT r.*, c.*, s.*,
-                   GROUP_CONCAT(DISTINCT m.id_material, ':', m.title_material, ':', rm.quantity) as materials,
-                   GROUP_CONCAT(DISTINCT i.id_ingredient, ':', i.name_ingredient, ':', ri.quantity, ':', ri.unit) as ingredients
-            FROM recipes r
-            LEFT JOIN categories c ON r.id_categorie = c.id_categorie
-            LEFT JOIN stages s ON r.id_recipe = s.id_recipe
-            LEFT JOIN recipe_materials rm ON r.id_recipe = rm.id_recipe
-            LEFT JOIN materials m ON rm.id_material = m.id_material
-            LEFT JOIN recipe_ingredients ri ON r.id_recipe = ri.id_recipe
-            LEFT JOIN ingredients i ON ri.id_ingredient = i.id_ingredient
-            WHERE r.id_recipe = ?
-            GROUP BY r.id_recipe, s.id_stage`;
+    async updateRecipe(id: string, data: Partial<Recipe>): Promise<void> {
+        const recipeRef = ref(this.db, `${this.collection}/${id}`);
+        await update(recipeRef, data);
+    }
 
-        return this.dbService.executeNativeQuery<RecipeWithDetails>(sql, [id]).then(results => results[0]);
+    async deleteRecipe(id: string): Promise<void> {
+        await remove(ref(this.db, `${this.collection}/${id}`));
     }
 }

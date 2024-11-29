@@ -5,6 +5,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { LoadingModule } from '../loading/loading.module';
 
 
 
@@ -17,7 +18,7 @@ import { RouterModule } from '@angular/router';
     BrowserModule,
     FormsModule,
     MatTabsModule,
-    RouterModule,
+    RouterModule, LoadingModule
 
   ], exports: [CategoriesComponent]
 })

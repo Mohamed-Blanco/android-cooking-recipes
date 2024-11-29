@@ -1,96 +1,74 @@
-<div id_user="core" class="flex flex-col gap-10 pt-24 pb-32 bg-[#F6F6FF]  w-screen ">
-
+@if (loading) {
+<div class="h-screen bg-[#F6F6FF] pb-10 flex w-screen justify-center items-center">
+    <app-loading></app-loading>
+</div>
+} @else {
+<div id_user="core" class="flex flex-col gap-10 pt-24 pb-32 bg-[#F6F6FF] w-screen">
     <div>
-        <!-- Add User Form -->
-        <form (ngSubmit)="addCategory()">
-            <input [(ngModel)]="newCategory.name" name="name" placeholder="name">
-            <input [(ngModel)]="newCategory.description" name="description" placeholder="description">
-            <button type="submit">Add User</button>
-        </form>
-
-        <!-- Users List -->
-        <div *ngFor="let categorie of categories">
-            <span>{{categorie.name}} - {{categorie.description}}</span>
-            <button (click)="deleteCategory(categorie.id_categorie!)">Delete</button>
-        </div>
-    </div>
-
-
-    <div class="">
-
         <div id_user="categories">
-            <div class="px-6 flex justify-between ">
+            <div class="px-6 flex justify-between">
                 <p>Categories</p>
                 <a [routerLink]="['/Landing/Categories']" class="underline">See All</a>
             </div>
         </div>
-
-        <div class="flex py-2 gap-4 px-4 pt-5 w-full overflow-x-scroll  ">
-            <app-categorie-card *ngFor="let categorie of categories" [categorie]="categorie"></app-categorie-card>
-            <app-categorie-card></app-categorie-card>
-            <app-categorie-card></app-categorie-card>
-            <app-categorie-card></app-categorie-card>
+        <div class="flex py-2 gap-4 px-4 pt-5 w-full overflow-x-scroll">
+            <app-categorie-card [routerLink]="['/Landing/overview', categorie?.id_categorie]"
+                *ngFor="let categorie of listcategories" [categorie]="categorie">
+            </app-categorie-card>
         </div>
     </div>
 
     <div>
-
         <div id_user="thisweek">
-            <div class="px-6 flex justify-between pt-4">
+            <div class="px-6 flex justify-between">
                 <p class="text-xl">For You</p>
-
             </div>
-
-            <div class="flex gap-4 px-4 pt-5 w-full py-2 overflow-x-scroll  ">
-                <div [routerLink]="['/Landing/Recip']"><app-recips-card> </app-recips-card></div>
-                <div [routerLink]="['/Landing/Recip']"><app-recips-card> </app-recips-card></div>
-                <div [routerLink]="['/Landing/Recip']"><app-recips-card> </app-recips-card></div>
-                <div [routerLink]="['/Landing/Recip']"><app-recips-card> </app-recips-card></div>
-                <div [routerLink]="['/Landing/Recip']"><app-recips-card> </app-recips-card></div>
-                <div [routerLink]="['/Landing/Recip']"><app-recips-card> </app-recips-card></div>
-
+            <div class="flex gap-4 px-4 pt-5 w-full py-2 overflow-x-scroll">
+                @if (RecipsForyou) {
+                <app-recips-card *ngFor="let recipe of RecipsForyou" [recipe]="recipe"
+                    [categorieName]="categories[0]?.name">
+                </app-recips-card>
+                }
             </div>
         </div>
     </div>
 
     <div>
-
         <div id_user="thisweek">
             <div class="px-6 flex justify-between pt-4">
-                <p class="text-xl">Tagines </p>
+                <p class="text-xl">{{categories[1]?.name}}</p>
+            </div>
+            <div class="flex gap-4 px-4 py-2 pt-5 w-full overflow-x-scroll">
+                @if (RecipsCategorie1) {
+                <app-recips-card *ngFor="let recipe of RecipsCategorie1" [categorieName]="categories[1]?.name"
+                    [recipe]="recipe">
+                </app-recips-card>
+                }
+            </div>
+        </div>
 
+        <div>
+            <div id_user="thisweek">
+                <div class="px-6 flex justify-between pt-4">
+                    <p class="text-xl">{{categories[2]?.name}}</p>
+                </div>
+                <div class="flex gap-4 px-4 pt-5 py-2 w-full overflow-x-scroll">
+                    @if (RecipsCategorie2) {
+                    <app-recips-card *ngFor="let recipe of RecipsCategorie2" [categorieName]="categories[2]?.name"
+                        [recipe]="recipe">
+                    </app-recips-card>
+                    }
+                </div>
             </div>
 
-            <div class="flex gap-4 px-4 py-2 pt-5 w-full overflow-x-scroll  ">
-                <app-recips-card></app-recips-card>
-                <app-recips-card></app-recips-card>
-                <app-recips-card></app-recips-card>
-                <app-recips-card></app-recips-card>
+            <div class="px-4 py-4 shadow-md mx-5 flex flex-col gap-2 rounded-lg bg-white">
+                <p class="text-xl">Looking for more?</p>
+                <p>Discover more using the search bar</p>
+                <button [routerLink]="['/Search']" class="border-2 rounded-full border-black px-20 py-1">
+                    Explore
+                </button>
             </div>
         </div>
     </div>
-
-    <div>
-
-        <div id_user="thisweek">
-            <div class="px-6 flex justify-between pt-4 ">
-                <p class="text-xl ">Couscous </p>
-
-            </div>
-
-            <div class="flex gap-4 px-4 pt-5 py-2 w-full overflow-x-scroll  ">
-                <app-recips-card></app-recips-card>
-                <app-recips-card></app-recips-card>
-                <app-recips-card></app-recips-card>
-                <app-recips-card></app-recips-card>
-            </div>
-        </div>
-    </div>
-
-    <div class=" px-4 py-4 shadow-md mx-5 flex flex-col gap-2 rounded-lg bg-white ">
-        <p class="text-xl">Looking for more?</p>
-        <p>Discover more using the search bar </p>
-        <button [routerLink]="['/Search']" class="border-2 rounded-full border-black px-20 py-1 ">Explore</button>
-    </div>
-
 </div>
+}

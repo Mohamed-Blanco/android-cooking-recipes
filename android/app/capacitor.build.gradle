@@ -10,7 +10,11 @@ android {
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
     implementation project(':capacitor-community-sqlite')
-
+    implementation project(':capacitor-firebase-authentication')
+    implementation project(':capacitor-firebase-functions')
+    implementation project(':capacitor-preferences')
+    implementation platform('com.google.firebase:firebase-bom:32.5.0')
+    implementation "com.google.firebase:firebase-config"
 }
 
 

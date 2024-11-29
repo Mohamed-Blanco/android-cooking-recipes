@@ -1,8 +1,19 @@
-<div class="flex flex-col  pt-16 pb-32 bg-[#F6F6FF]  w-screen px-5">
+@if(loading){
+
+
+<div class="h-screen bg-[#F6F6FF]  pb-10 flex w-screen justify-center items-center">
+    <app-loading></app-loading>
+</div>
+
+}@else {
+
+
+
+<div class="flex flex-col  pt-16 pb-32 bg-[#F6F6FF]  min-h-screen w-screen px-5">
 
 
     <p class="pt-6  ">Categories :</p>
-    <div class="mt-8 bg-white shadow-md gap-2  rounded-full flex py-2 px-4 relative justify-center">
+    <div class="mt-5 bg-white shadow-md gap-2  rounded-full flex py-2 px-4 relative justify-center">
         <svg class="w-6 h-6 " viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -18,73 +29,24 @@
 
 
     <div class="mt-8 grid gap-3 grid-cols-2">
-        <div class="relative w-full h-30 bg-black shadow-md rounded-lg overflow-hidden">
-            <p class="z-10 absolute  bottom-8 left-4 text-white ">Salades</p>
-            <p class="z-10 absolute  bottom-4 left-4 text-gray-300 text-xs ">Categorie description</p>
+        <div *ngFor="let categorie of categories" [routerLink]="['/Landing/overview'  , categorie.id_categorie]"
+            class="relative w-full h-30 bg-black shadow-md rounded-lg overflow-hidden">
+            <p class="z-10 absolute whitespace-normal bottom-8 left-4 text-white">
+                {{categorie?.name}}
+            </p>
+            <p
+                class="z-10 absolute bottom-4 left-4 text-gray-300 text-xs overflow-hidden whitespace-nowrap text-ellipsis w-[90%]">
+                {{categorie?.description}}
+            </p>
 
-            <div class="w-full h-full absolute bg-gradient-to-t from-neutral-900 to-transparent ">
-            </div>
+            <div class="w-full h-full absolute bg-gradient-to-t from-neutral-900 to-transparent"></div>
             <img src="assets/salades.jpg" class="w-full h-full" alt="">
-
-
         </div>
-
-        <div class="relative w-full h-30 bg-black shadow-md rounded-lg overflow-hidden">
-            <p class="z-10 absolute  bottom-8 left-4 text-white ">Salades</p>
-            <p class="z-10 absolute  bottom-4 left-4 text-gray-300 text-xs ">Categorie description</p>
-
-            <div class="w-full h-full absolute bg-gradient-to-t from-neutral-900 to-transparent ">
-            </div>
-            <img src="assets/salades.jpg" class="w-full h-full" alt="">
-
-
-        </div>
-
-        <div class="relative w-full h-30 bg-black shadow-md rounded-lg overflow-hidden">
-            <p class="z-10 absolute  bottom-8 left-4 text-white ">Salades</p>
-            <p class="z-10 absolute  bottom-4 left-4 text-gray-300 text-xs ">Categorie description</p>
-
-            <div class="w-full h-full absolute bg-gradient-to-t from-neutral-900 to-transparent ">
-            </div>
-            <img src="assets/salades.jpg" class="w-full h-full" alt="">
-
-
-        </div>
-
-        <div class="relative w-full h-30 bg-black shadow-md rounded-lg overflow-hidden">
-            <p class="z-10 absolute  bottom-8 left-4 text-white ">Salades</p>
-            <p class="z-10 absolute  bottom-4 left-4 text-gray-300 text-xs ">Categorie description</p>
-
-            <div class="w-full h-full absolute bg-gradient-to-t from-neutral-900 to-transparent ">
-            </div>
-            <img src="assets/salades.jpg" class="w-full h-full" alt="">
-
-
-        </div>
-
-        <div class="relative w-full h-30 bg-black shadow-md rounded-lg overflow-hidden">
-            <p class="z-10 absolute  bottom-8 left-4 text-white ">Salades</p>
-            <p class="z-10 absolute  bottom-4 left-4 text-gray-300 text-xs ">Categorie description</p>
-
-            <div class="w-full h-full absolute bg-gradient-to-t from-neutral-900 to-transparent ">
-            </div>
-            <img src="assets/salades.jpg" class="w-full h-full" alt="">
-
-
-        </div>
-
-        <div class="relative w-full h-30 bg-black shadow-md rounded-lg overflow-hidden">
-            <p class="z-10 absolute  bottom-8 left-4 text-white ">Salades</p>
-            <p class="z-10 absolute  bottom-4 left-4 text-gray-300 text-xs ">Categorie description</p>
-
-            <div class="w-full h-full absolute bg-gradient-to-t from-neutral-900 to-transparent ">
-            </div>
-            <img src="assets/salades.jpg" class="w-full h-full" alt="">
-
-
-        </div>
-
     </div>
 
 
+
+
 </div>
+
+}

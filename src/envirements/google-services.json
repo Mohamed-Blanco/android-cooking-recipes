@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "434486016550",
+    "firebase_url": "https://test-firebase-a2796-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "test-firebase-a2796",
+    "storage_bucket": "test-firebase-a2796.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:434486016550:android:28cbf845c2953e725d04e7",
+        "android_client_info": {
+          "package_name": "org.Blanco.App"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMbAqeCM-UMLf0wWCmQRkK7XRIAed1yFM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

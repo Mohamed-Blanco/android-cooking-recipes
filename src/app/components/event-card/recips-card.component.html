@@ -1,6 +1,22 @@
-<div class="w-fit min-w-40 bg-white rounded-lg p-2 shadow-md">
+<div class="w-fit min-w-40 relative bg-white rounded-lg p-2 shadow-md">
+    <img [routerLink]="['/Landing/Recip' , recipe.id_recipe]" src="{{recipe?.image_url}}"
+        class=" w-64 h-40  rounded-lg " alt="">
+    <p [routerLink]="['/Landing/Recip' , recipe.id_recipe]">{{recipe?.title}}</p>
+    @if (categorieName) {
+    <p>From <span class="font-bold">{{categorieName}}</span></p>
 
-    <img src="https://assets.afcdn.com/recipe/20180621/79724_w600.jpg" class=" w-64 h-40 bg-black rounded-lg " alt="">
-    <p>Couscous poulet et merguez facile</p>
-    <p>From <span class=" font-bold">Plats Marocain</span></p>
+    }
+
+    @if (!checkFavourite) {
+    <button class="absolute top-4 right-4"><!-- add -->
+        <img src="assets/icons/heart.png" class="w-6 h-6 transition-transform hover:scale-120" alt="Favorite">
+    </button>
+    }@else {
+    <button class="absolute top-4 right-4"><!-- remove -->
+        <img src="assets/icons/heartfull.png" class="w-6 h-6 transition-transform hover:scale-120" alt="Favorite">
+    </button>
+
+    }
+
+
 </div>

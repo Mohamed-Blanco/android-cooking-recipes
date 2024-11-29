@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { DatabaseService } from '../../../services/database.service';
+
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/users.service';
-import { Category, User } from '../../../models/models';
+import { Category, Recipe, User } from '../../../models/models';
 import { CategoryService } from '../../../services/category.service';
+import { getDatabase, ref, get } from 'firebase/database';
+import { RecipeService } from '../../../services/recipe.service';
 
 
 @Component({
@@ -13,49 +15,42 @@ import { CategoryService } from '../../../services/category.service';
 export class HomeComponent implements OnInit {
 
 
-  categories !: Category[];
-  newCategory: Omit<Category, 'id' | 'created_at'> = {
-    name: '',
-    description: '',
-  };
-
-  constructor(private userService: UserService, private categoryService: CategoryService) { }
-
-
+  loading: boolean = true;
   async ngOnInit() {
-    await
-      await this.loadCategories();
-  }
 
-  async loadCategories() {
-    this.categories = await this.categoryService.getCategories();
-  }
+    await new Promise(resolve => setTimeout(resolve, 500));
 
-  async addCategory() {
-    console.log("hello", this.newCategory.name + this.newCategory.description)
-
-    if (this.newCategory.name && this.newCategory.description) {
-      await this.categoryService.addCategory(this.newCategory);
-      this.newCategory = {
-        name: '',
-        description: ''
-      }
-      this.loadCategories()
+    try {
+      this.listcategories = await this.categoryService.getTenCategories();
+      this.categories = await this.categoryService.getThreeCategories();
+      this.loading = false;
+      this.getTenRecipesbyCategorie();
+      console.log('Categories:', this.categories);
+      console.log('List Categories:', this.listcategories);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
     }
   }
 
+  categories!: Category[];
+  listcategories !: Category[];
+  recipes !: Recipe[];
+  test !: string;
+  constructor(private recipesService: RecipeService, private userService: UserService, private categoryService: CategoryService) {
 
-  async deleteCategory(id: number) {
-    await this.categoryService.deleteCategory(id);
-    await this.loadCategories();
+
   }
 
-  async updateCategory(id: number, data: Partial<Category>) {
-    await this.categoryService.updateCategory(id, data)
-    await this.loadCategories();
+
+
+  RecipsForyou: Recipe[];
+  RecipsCategorie1: Recipe[];
+  RecipsCategorie2: Recipe[];
+
+  async getTenRecipesbyCategorie() {
+    this.RecipsForyou = await this.recipesService.getRecipesByCategoryId(this.categories[0].id_categorie);
+    this.RecipsCategorie1 = await this.recipesService.getRecipesByCategoryId(this.categories[1].id_categorie);
+    this.RecipsCategorie2 = await this.recipesService.getRecipesByCategoryId(this.categories[2].id_categorie);
   }
-
-
-
 
 } 

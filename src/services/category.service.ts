@@ -1,34 +1,48 @@
-
-// category.service.ts
-import { Injectable } from "@angular/core";
-import { DatabaseService } from "./database.service";
-import { Category } from "../models/models";
+import { Injectable } from '@angular/core';
+import { Category } from '../models/models';
+import { Database, ref, get, set, update, remove, limitToFirst, query } from '@angular/fire/database';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CategoryService {
-    private storeName = 'categories';
+    private collection = 'categories';
 
-    constructor(private dbService: DatabaseService) { }
+    constructor(private db: Database) { }
 
-    async addCategory(category: Omit<Category, 'id_categorie' | 'created_at'>): Promise<Category> {
-        return this.dbService.add<Category>(this.storeName, category);
+    async addCategory(category: Omit<Category, 'created_at'>): Promise<void> {
+        const categoryRef = ref(this.db, `${this.collection}/${category.id_categorie}`);
+        await set(categoryRef, category);
     }
 
     async getCategories(): Promise<Category[]> {
-        return this.dbService.getAll<Category>(this.storeName);
+        const snapshot = await get(ref(this.db, this.collection));
+        return snapshot.exists() ? Object.values(snapshot.val()) as Category[] : [];
     }
 
-    async getCategory(id: number): Promise<Category | undefined> {
-        return this.dbService.getById<Category>(this.storeName, id);
+    async getTenCategories(): Promise<Category[]> {
+        const categoriesQuery = query(ref(this.db, this.collection), limitToFirst(10)); // Limit to first 10
+        const snapshot = await get(categoriesQuery);
+        return snapshot.exists() ? Object.values(snapshot.val()) as Category[] : [];
     }
 
-    async updateCategory(id: number, data: Partial<Category>): Promise<Category> {
-        return this.dbService.update<Category>(this.storeName, id, data);
+    async getThreeCategories(): Promise<Category[]> {
+        const categoriesQuery = query(ref(this.db, this.collection), limitToFirst(3)); // Limit to first 10
+        const snapshot = await get(categoriesQuery);
+        return snapshot.exists() ? Object.values(snapshot.val()) as Category[] : [];
     }
 
-    async deleteCategory(id: number): Promise<void> {
-        return this.dbService.delete(this.storeName, id);
+    async getCategoryById(id: string): Promise<Category | null> {
+        const snapshot = await get(ref(this.db, `${this.collection}/${id}`));
+        return snapshot.exists() ? snapshot.val() as Category : null;
+    }
+
+    async updateCategory(id: string, data: Partial<Category>): Promise<void> {
+        const categoryRef = ref(this.db, `${this.collection}/${id}`);
+        await update(categoryRef, data);
+    }
+
+    async deleteCategory(id: string): Promise<void> {
+        await remove(ref(this.db, `${this.collection}/${id}`));
     }
 }

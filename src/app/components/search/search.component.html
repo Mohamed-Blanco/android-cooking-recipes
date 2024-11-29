@@ -1,5 +1,10 @@
-<div class="bg-[#F6F6FF] shadow-md px-6 pt-20 pb-32 flex flex-col  ">
+@if (categories.length==0) {
+<div class="h-screen bg-[#F6F6FF]  pb-10 flex w-screen justify-center items-center">
+    <app-loading></app-loading>
+</div>
 
+}@else{
+<div class="bg-[#F6F6FF] shadow-md px-6 pt-20 pb-32 flex flex-col min-h-screen ">
     <div class="bg-white shadow-md gap-2  rounded-full flex py-2 px-4 relative justify-center mb-3">
         <svg class="w-6 h-6 " viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -10,7 +15,20 @@
                     stroke="#95969D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
             </g>
         </svg>
-        <input type="text" class="w-full " name="searchevents" placeholder="Search events">
+        <div class="relative w-full ">
+            <input type="text" class="w-full   rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                [formControl]="searchControl" name="search" placeholder="Search Recipes">
+
+            <!-- Autocomplete Dropdown -->
+            <ul *ngIf="searchResults.length > 0"
+                class="absolute z-10 w-full bg-white border rounded-md shadow-lg max-h-60 overflow-y-auto">
+                <li *ngFor="let recipe of searchResults" class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                    (click)="selectRecipe(recipe)">
+                    {{ recipe.title }}
+                    <span class="text-gray-500 text-sm">({{ recipe.cuisine }})</span>
+                </li>
+            </ul>
+        </div>
         <div class="w-[0.8px] h-6 bg-[#202025] rounded-lg"></div>
         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -22,44 +40,29 @@
             </g>
         </svg>
     </div>
+    <div *ngIf="searchQueries.length !== 0">
+        <p class="text-xl mt-4 mb-4">Recent Searchs</p>
 
-    <p class="text-xl mt-4 mb-4">Recent Searchs</p>
+        <div class=" flex flex-wrap gap-2 ">
+            <div *ngFor="let search of searchQueries"
+                class="border-2 px-4 max-w-full flex-grow-0 flex-shrink-0 basis-auto inline-flex border-[#13B423] text-[#13B423] shadow-sm bg-[#F6F6FF] rounded-full  justify-center items-center py-1">
+                <p>{{search.searchQuery}}</p>
+            </div>
 
-    <div class=" flex flex-wrap gap-2 ">
-        <div
-            class="border-2 px-4 max-w-full flex-grow-0 flex-shrink-0 basis-auto inline-flex border-[#13B423] text-[#13B423] shadow-sm bg-[#F6F6FF] rounded-full  justify-center items-center py-1">
-            <p>Recette Salade marocain</p>
+
         </div>
-        <div
-            class="border-2 px-4 max-w-full flex-grow-0 flex-shrink-0 basis-auto inline-flex border-[#13B423] text-[#13B423] shadow-sm bg-[#F6F6FF] rounded-full  justify-center items-center py-1">
-            <p>Rffisa Marocain </p>
-        </div>
-
     </div>
+
 
     <p class="text-xl mt-4 mb-4">Popular Searchs</p>
 
     <div class=" flex flex-wrap gap-2 mb-16 ">
-        <div
+        <div *ngfor="let recipe of recipes" [routerLink]="['/Landing/Recip' , recipe.id_recipe]"
             class="border-2 px-4 max-w-full flex-grow-0 flex-shrink-0 basis-auto inline-flex border-[#13B423] text-[#13B423] shadow-sm bg-[#F6F6FF] rounded-full  justify-center items-center py-1">
-            <p>Tagine</p>
+            <p>{{recipe.title}}</p>
         </div>
-        <div
-            class="border-2 px-4 max-w-full flex-grow-0 flex-shrink-0 basis-auto inline-flex border-[#13B423] text-[#13B423] shadow-sm bg-[#F6F6FF] rounded-full  justify-center items-center py-1">
-            <p>Couscous</p>
-        </div>
-        <div
-            class="border-2 px-4 max-w-full flex-grow-0 flex-shrink-0 basis-auto inline-flex border-[#13B423] text-[#13B423] shadow-sm bg-[#F6F6FF] rounded-full  justify-center items-center py-1">
-            <p>Couscous</p>
-        </div>
-        <div
-            class="border-2 px-4 max-w-full flex-grow-0 flex-shrink-0 basis-auto inline-flex border-[#13B423] text-[#13B423] shadow-sm bg-[#F6F6FF] rounded-full  justify-center items-center py-1">
-            <p>Couscous</p>
-        </div>
-        <div
-            class="border-2 px-4 max-w-full flex-grow-0 flex-shrink-0 basis-auto inline-flex border-[#13B423] text-[#13B423] shadow-sm bg-[#F6F6FF] rounded-full  justify-center items-center py-1">
-            <p>Couscous</p>
-        </div>
+
+
 
     </div>
 
@@ -67,16 +70,12 @@
     <p class="text-xl mb-4 ">Categories</p>
 
     <div class="grid grid-cols-1  mt-2 gap-5">
-        <app-categorie-card></app-categorie-card>
-        <app-categorie-card></app-categorie-card>
-        <app-categorie-card></app-categorie-card>
-        <app-categorie-card></app-categorie-card>
-        <app-categorie-card></app-categorie-card>
-        <app-categorie-card></app-categorie-card>
-        <app-categorie-card></app-categorie-card>
-        <app-categorie-card></app-categorie-card>
+        <app-categorie-card *ngFor="let categorie of categories" [categorie]="categorie"></app-categorie-card>
+
     </div>
 
 
 
 </div>
+
+}
